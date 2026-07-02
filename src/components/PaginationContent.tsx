@@ -15,7 +15,6 @@ export default function PaginationContent({
 
   if (pageCount <= 1) return null
 
-  const pages = []
   const maxVisible = 5
   let startPage = Math.max(0, currentPage - Math.floor(maxVisible / 2))
   let endPage = Math.min(pageCount - 1, startPage + maxVisible - 1)

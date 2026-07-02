@@ -1,6 +1,9 @@
 import { useLanguageStore } from '../store/languageStore'
-import { t } from '../utils/i18n'
+import { t, translations } from '../utils/i18n'
+import type { ChangeEvent } from 'react'
 import type { SortField, SortOrder } from '../types/product'
+
+type TranslationKey = keyof typeof translations.ru
 
 interface SortSelectProps {
   sortBy: SortField
@@ -8,7 +11,7 @@ interface SortSelectProps {
   onChange: (sortBy: SortField, sortOrder: SortOrder) => void
 }
 
-const SORT_KEYS: { key: keyof ReturnType<typeof t>; sortBy: SortField; sortOrder: SortOrder }[] = [
+const SORT_KEYS: { key: TranslationKey; sortBy: SortField; sortOrder: SortOrder }[] = [
   { key: 'title_asc', sortBy: 'title', sortOrder: 'asc' },
   { key: 'title_desc', sortBy: 'title', sortOrder: 'desc' },
   { key: 'price_asc', sortBy: 'price', sortOrder: 'asc' },
@@ -21,7 +24,7 @@ export function SortSelect({ sortBy, sortOrder, onChange }: SortSelectProps) {
   const { language } = useLanguageStore()
   const currentValue = `${sortBy}-${sortOrder}`
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const option = SORT_KEYS.find((o) => `${o.sortBy}-${o.sortOrder}` === e.target.value)
     if (option) {
       onChange(option.sortBy, option.sortOrder)
